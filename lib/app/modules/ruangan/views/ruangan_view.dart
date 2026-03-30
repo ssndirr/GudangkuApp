@@ -5,32 +5,39 @@ import '../controllers/ruangan_controller.dart';
 class RuanganView extends GetView<RuanganController> {
   const RuanganView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF6B4423),
-                Color(0xFF8B5A3C),
-              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [primaryBrown, Color(0xFF5D4037)],
             ),
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: lightGold),
           onPressed: () => Get.back(),
         ),
         title: const Text(
           "Data Ruangan",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 20,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
@@ -38,23 +45,23 @@ class RuanganView extends GetView<RuanganController> {
 
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showForm(),
-        backgroundColor: const Color(0xFF6B4423),
-        icon: const Icon(Icons.add_rounded, color: Colors.white),
+        backgroundColor: accentGold,
+        icon: const Icon(Icons.add_rounded, color: primaryBrown),
         label: const Text(
           'Tambah',
           style: TextStyle(
-            color: Colors.white,
+            color: primaryBrown,
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 4,
+        elevation: 6,
       ),
 
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6B4423)),
+              valueColor: AlwaysStoppedAnimation<Color>(accentGold),
             ),
           );
         }
@@ -64,18 +71,25 @@ class RuanganView extends GetView<RuanganController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.meeting_room_outlined,
-                  size: 80,
-                  color: Colors.grey[300],
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: accentGold.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.meeting_room_outlined,
+                    size: 60,
+                    color: accentGold.withOpacity(0.5),
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Text(
                   "Belum ada ruangan",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: primaryBrown.withOpacity(0.7),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -83,7 +97,7 @@ class RuanganView extends GetView<RuanganController> {
                   "Tap tombol + untuk menambah",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[400],
+                    color: Colors.grey[500],
                   ),
                 ),
               ],
@@ -92,47 +106,51 @@ class RuanganView extends GetView<RuanganController> {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           itemCount: controller.ruanganList.length,
           itemBuilder: (context, index) {
             final ruangan = controller.ruanganList[index];
 
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: primaryBrown.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 child: Row(
                   children: [
-                    // Icon
+                    // Icon with gradient
                     Container(
-                      padding: const EdgeInsets.all(14),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF6B4423),
-                            Color(0xFF8B5A3C),
-                          ],
+                          colors: [accentGold, lightGold],
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: accentGold.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: const Icon(
                         Icons.meeting_room_rounded,
                         color: Colors.white,
-                        size: 28,
+                        size: 26,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 18),
                     // Content
                     Expanded(
                       child: Column(
@@ -141,12 +159,12 @@ class RuanganView extends GetView<RuanganController> {
                           Text(
                             ruangan['nama_ruangan'] ?? '',
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF4A2C2A),
+                              color: primaryBrown,
                             ),
                           ),
-                          const SizedBox(height: 6),
+                          const SizedBox(height: 8),
                           Row(
                             children: [
                               Icon(
@@ -154,7 +172,7 @@ class RuanganView extends GetView<RuanganController> {
                                 size: 16,
                                 color: Colors.grey[600],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 6),
                               Expanded(
                                 child: Text(
                                   ruangan['lokasi'] ?? '-',
@@ -167,19 +185,23 @@ class RuanganView extends GetView<RuanganController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               _buildStatChip(
                                 icon: Icons.person_outline,
                                 label: '${ruangan['users_count'] ?? 0}',
-                                color: Colors.blue,
+                                gradient: const LinearGradient(
+                                  colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
+                                ),
                               ),
-                              const SizedBox(width: 8),
+                              const SizedBox(width: 10),
                               _buildStatChip(
                                 icon: Icons.inventory_2_outlined,
                                 label: '${ruangan['barangs_count'] ?? 0}',
-                                color: Colors.orange,
+                                gradient: const LinearGradient(
+                                  colors: [accentGold, lightGold],
+                                ),
                               ),
                             ],
                           ),
@@ -189,7 +211,7 @@ class RuanganView extends GetView<RuanganController> {
                     // Action Menu
                     PopupMenuButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       icon: Icon(
                         Icons.more_vert_rounded,
@@ -209,7 +231,7 @@ class RuanganView extends GetView<RuanganController> {
                             children: [
                               Icon(Icons.edit_rounded, color: Colors.blue, size: 20),
                               SizedBox(width: 12),
-                              Text("Edit"),
+                              Text("Edit", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -219,7 +241,7 @@ class RuanganView extends GetView<RuanganController> {
                             children: [
                               Icon(Icons.delete_rounded, color: Colors.red, size: 20),
                               SizedBox(width: 12),
-                              Text("Hapus"),
+                              Text("Hapus", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -238,25 +260,32 @@ class RuanganView extends GetView<RuanganController> {
   Widget _buildStatChip({
     required IconData icon,
     required String label,
-    required Color color,
+    required Gradient gradient,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 4,
+            offset: const Offset(0, 2),
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: color),
-          const SizedBox(width: 4),
+          Icon(icon, size: 14, color: Colors.white),
+          const SizedBox(width: 6),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
-              fontWeight: FontWeight.w600,
-              color: color,
+              fontWeight: FontWeight.w700,
+              color: Colors.white,
             ),
           ),
         ],
@@ -273,14 +302,14 @@ class RuanganView extends GetView<RuanganController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           constraints: const BoxConstraints(maxWidth: 500),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -290,15 +319,12 @@ class RuanganView extends GetView<RuanganController> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF6B4423),
-                            Color(0xFF8B5A3C),
-                          ],
+                          colors: [accentGold, lightGold],
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
                         Icons.meeting_room_rounded,
@@ -306,83 +332,85 @@ class RuanganView extends GetView<RuanganController> {
                         size: 24,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Text(
                       ruangan == null ? "Tambah Ruangan" : "Edit Ruangan",
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF4A2C2A),
+                        color: primaryBrown,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
                 TextField(
                   controller: namaController,
                   autofocus: true,
+                  style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: "Nama Ruangan",
                     hintText: "Masukkan nama ruangan",
                     prefixIcon: const Icon(
                       Icons.meeting_room_outlined,
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: const BorderSide(
-                        color: Color(0xFF6B4423),
+                        color: accentGold,
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
                 TextField(
                   controller: lokasiController,
+                  style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: "Lokasi",
                     hintText: "Masukkan lokasi ruangan",
                     prefixIcon: const Icon(
                       Icons.location_on_outlined,
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: const BorderSide(
-                        color: Color(0xFF6B4423),
+                        color: accentGold,
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
                 Row(
                   children: [
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Get.back(),
                         style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           side: BorderSide(color: Colors.grey[300]!),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(14),
                           ),
                         ),
                         child: const Text(
@@ -390,11 +418,12 @@ class RuanganView extends GetView<RuanganController> {
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -407,7 +436,7 @@ class RuanganView extends GetView<RuanganController> {
                               icon: const Icon(Icons.warning_rounded, color: Colors.white),
                               snackPosition: SnackPosition.BOTTOM,
                               margin: const EdgeInsets.all(16),
-                              borderRadius: 12,
+                              borderRadius: 14,
                             );
                             return;
                           }
@@ -427,18 +456,19 @@ class RuanganView extends GetView<RuanganController> {
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          backgroundColor: const Color(0xFF6B4423),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: accentGold,
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(14),
                           ),
-                          elevation: 2,
+                          elevation: 3,
                         ),
                         child: Text(
                           ruangan == null ? "Simpan" : "Update",
                           style: const TextStyle(
-                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -457,19 +487,19 @@ class RuanganView extends GetView<RuanganController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.1),
                   shape: BoxShape.circle,
@@ -477,19 +507,19 @@ class RuanganView extends GetView<RuanganController> {
                 child: const Icon(
                   Icons.delete_rounded,
                   color: Colors.red,
-                  size: 40,
+                  size: 44,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               const Text(
                 "Hapus Ruangan?",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 "Ruangan yang dihapus tidak dapat dikembalikan",
                 textAlign: TextAlign.center,
@@ -498,17 +528,17 @@ class RuanganView extends GetView<RuanganController> {
                   color: Colors.grey[600],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Get.back(),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         side: BorderSide(color: Colors.grey[300]!),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       child: const Text(
@@ -516,11 +546,12 @@ class RuanganView extends GetView<RuanganController> {
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -528,18 +559,19 @@ class RuanganView extends GetView<RuanganController> {
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                        elevation: 2,
+                        elevation: 3,
                       ),
                       child: const Text(
                         "Ya, Hapus",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),

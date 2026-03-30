@@ -5,70 +5,76 @@ import '../controllers/dashboard_controller.dart';
 class DashboardView extends GetView<DashboardController> {
   const DashboardView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: _appBar(),
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6B4423)),
+              valueColor: AlwaysStoppedAnimation<Color>(accentGold),
             ),
           );
         }
 
         return SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Welcome Banner
               Container(
                 width: double.infinity,
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFF6B4423), Color(0xFF8B5A3C)],
+                    colors: [accentGold, lightGold],
                   ),
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6B4423).withOpacity(0.3),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+                      color: accentGold.withOpacity(0.4),
+                      blurRadius: 15,
+                      offset: const Offset(0, 6),
                     ),
                   ],
                 ),
                 child: Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(12),
+                      padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.2),
-                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       child: const Icon(
                         Icons.dashboard_customize_rounded,
                         color: Colors.white,
-                        size: 28,
+                        size: 30,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 18),
                     const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Dashboard',
+                            'Riwayat',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18,
+                              fontSize: 20,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: 2),
+                          SizedBox(height: 4),
                           Text(
                             'Ringkasan data gudang',
                             style: TextStyle(
@@ -83,59 +89,21 @@ class DashboardView extends GetView<DashboardController> {
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
-              // Stats Grid - Compact
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 3,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 0.95,
-                children: [
-                  _compactStatCard(
-                    title: "Kategori",
-                    value: controller.totalKategori.value.toString(),
-                    icon: Icons.category_rounded,
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF1976D2), Color(0xFF42A5F5)],
-                    ),
-                  ),
-                  _compactStatCard(
-                    title: "Ruangan",
-                    value: controller.totalRuangan.value.toString(),
-                    icon: Icons.meeting_room_rounded,
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF7B1FA2), Color(0xFFBA68C8)],
-                    ),
-                  ),
-                  _compactStatCard(
-                    title: "Barang",
-                    value: controller.totalBarang.value.toString(),
-                    icon: Icons.inventory_2_rounded,
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF388E3C), Color(0xFF66BB6A)],
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 20),
-
-              // Transaksi Section Header
+              // Section Header
               const Text(
-                'Transaksi Hari Ini',
+                'Transaksi',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
               ),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 14),
 
-              // Transaksi Cards
+              // Transaction Cards
               Row(
                 children: [
                   Expanded(
@@ -148,7 +116,7 @@ class DashboardView extends GetView<DashboardController> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: _transactionCard(
                       title: "Barang Keluar",
@@ -162,16 +130,25 @@ class DashboardView extends GetView<DashboardController> {
                 ],
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
-              // Quick Info Cards
+              // Quick Info
               const Text(
                 'Informasi Cepat',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
+              ),
+
+              const SizedBox(height: 14),
+
+              _infoCard(
+                icon: Icons.inventory_2,
+                title: "Total Barang",
+                value: "${controller.totalBarang.value } Barang",
+                color: const Color(0xFFF57C00),
               ),
 
               const SizedBox(height: 12),
@@ -179,11 +156,11 @@ class DashboardView extends GetView<DashboardController> {
               _infoCard(
                 icon: Icons.inventory_rounded,
                 title: "Total Stok Barang",
-                value: "${controller.totalBarang.value} Items",
+                value: "${controller.totalStok.value } Stok",
                 color: const Color(0xFFF57C00),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               _infoCard(
                 icon: Icons.trending_up_rounded,
@@ -192,7 +169,7 @@ class DashboardView extends GetView<DashboardController> {
                 color: const Color(0xFF0288D1),
               ),
 
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
 
               _infoCard(
                 icon: Icons.warehouse_rounded,
@@ -201,52 +178,7 @@ class DashboardView extends GetView<DashboardController> {
                 color: const Color(0xFF5E35B1),
               ),
 
-              const SizedBox(height: 20),
-
-              // Quick Actions
-              const Text(
-                'Aksi Cepat',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  Expanded(
-                    child: _quickActionButton(
-                      label: "Tambah\nBarang",
-                      icon: Icons.add_box_rounded,
-                      color: const Color(0xFF388E3C),
-                      onTap: () => Get.toNamed('/barang'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _quickActionButton(
-                      label: "Input\nMasuk",
-                      icon: Icons.input_rounded,
-                      color: const Color(0xFF43A047),
-                      onTap: () => Get.toNamed('/barang-masuk'),
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: _quickActionButton(
-                      label: "Input\nKeluar",
-                      icon: Icons.output_rounded,
-                      color: const Color(0xFFE53935),
-                      onTap: () => Get.toNamed('/barang-keluar'),
-                    ),
-                  ),
-                ],
-              ),
-
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
             ],
           ),
         );
@@ -255,7 +187,6 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  // ================= COMPACT STAT CARD (3 kolom) =================
   Widget _compactStatCard({
     required String title,
     required String value,
@@ -263,15 +194,15 @@ class DashboardView extends GetView<DashboardController> {
     required Gradient gradient,
   }) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         gradient: gradient,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(18),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
@@ -281,67 +212,10 @@ class DashboardView extends GetView<DashboardController> {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.25),
-              borderRadius: BorderRadius.circular(10),
+              color: Colors.white.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: Colors.white, size: 24),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            value,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 11,
-              color: Colors.white70,
-              fontWeight: FontWeight.w500,
-            ),
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ================= TRANSACTION CARD =================
-  Widget _transactionCard({
-    required String title,
-    required String value,
-    required IconData icon,
-    required Gradient gradient,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        gradient: gradient,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 8,
-            offset: const Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.25),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: Colors.white, size: 20),
+            child: Icon(icon, color: Colors.white, size: 26),
           ),
           const SizedBox(height: 12),
           Text(
@@ -356,9 +230,65 @@ class DashboardView extends GetView<DashboardController> {
           Text(
             title,
             style: const TextStyle(
+              fontSize: 11,
+              color: Colors.white70,
+              fontWeight: FontWeight.w600,
+            ),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _transactionCard({
+    required String title,
+    required String value,
+    required IconData icon,
+    required Gradient gradient,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(18),
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(icon, color: Colors.white, size: 22),
+          ),
+          const SizedBox(height: 14),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            title,
+            style: const TextStyle(
               fontSize: 12,
               color: Colors.white70,
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
@@ -366,7 +296,6 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  // ================= INFO CARD =================
   Widget _infoCard({
     required IconData icon,
     required String title,
@@ -374,29 +303,29 @@ class DashboardView extends GetView<DashboardController> {
     required Color color,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: primaryBrown.withOpacity(0.06),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(12),
+            padding: const EdgeInsets.all(14),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(10),
+              color: color.withOpacity(0.15),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Icon(icon, color: color, size: 24),
+            child: Icon(icon, color: color, size: 26),
           ),
-          const SizedBox(width: 16),
+          const SizedBox(width: 18),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -406,15 +335,16 @@ class DashboardView extends GetView<DashboardController> {
                   style: TextStyle(
                     fontSize: 13,
                     color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 4),
+                const SizedBox(height: 6),
                 Text(
                   value,
                   style: const TextStyle(
-                    fontSize: 16,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF4A2C2A),
+                    color: primaryBrown,
                   ),
                 ),
               ],
@@ -425,7 +355,6 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  // ================= QUICK ACTION BUTTON =================
   Widget _quickActionButton({
     required String label,
     required IconData icon,
@@ -434,38 +363,38 @@ class DashboardView extends GetView<DashboardController> {
   }) {
     return InkWell(
       onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: color.withOpacity(0.3), width: 1.5),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: color.withOpacity(0.4), width: 2),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 6,
-              offset: const Offset(0, 2),
+              color: primaryBrown.withOpacity(0.06),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
         child: Column(
           children: [
             Container(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10),
+                color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(12),
               ),
-              child: Icon(icon, color: color, size: 24),
+              child: Icon(icon, color: color, size: 26),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             Text(
               label,
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
                 color: color,
                 height: 1.2,
               ),
@@ -476,71 +405,68 @@ class DashboardView extends GetView<DashboardController> {
     );
   }
 
-  // ================= APP BAR =================
   PreferredSizeWidget _appBar() {
     return AppBar(
       elevation: 0,
+      toolbarHeight: 70,
       flexibleSpace: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF6B4423), Color(0xFF8B5A3C)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [primaryBrown, Color(0xFF5D4037)],
           ),
         ),
       ),
       title: const Text(
-        "Dashboard",
+        "RIWAYAT",
         style: TextStyle(
           color: Colors.white,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w900,
           fontSize: 20,
+          letterSpacing: 0.5,
         ),
       ),
       centerTitle: true,
     );
   }
 
-  // ================= BOTTOM NAV =================
   Widget _buildBottomNavBar(int currentIndex) {
     return Container(
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       decoration: BoxDecoration(
+        color: primaryBrown,
+        borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
+            color: primaryBrown.withOpacity(0.4),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: BottomNavigationBar(
-        currentIndex: currentIndex,
-        selectedItemColor: const Color(0xFF6B4423),
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        onTap: (index) {
-          if (index == 0) Get.offAllNamed('/home');
-          if (index == 1) Get.offAllNamed('/dashboard');
-          if (index == 2) Get.offAllNamed('/profile');
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          currentIndex: currentIndex,
+          selectedItemColor: lightGold,
+          unselectedItemColor: Colors.white.withOpacity(0.5),
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            if (index == 0) Get.offAllNamed('/home');
+            if (index == 1) Get.offAllNamed('/dashboard');
+            if (index == 2) Get.offAllNamed('/profile');
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home_max_rounded), label: 'Beranda'),
+            BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined), label: 'Stats'),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profil'),
+          ],
+        ),
       ),
     );
   }

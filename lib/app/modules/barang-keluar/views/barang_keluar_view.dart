@@ -5,19 +5,26 @@ import '../controllers/barang_keluar_controller.dart';
 class BarangKeluarView extends GetView<BarangKeluarController> {
   const BarangKeluarView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color softBeige = Color(0xFFFDFBF7);
+  static const Color errorRed = Color(0xFFE53935);
+  static const Color lightRed = Color(0xFFEF5350);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFFE53935),
-                Color(0xFFEF5350),
-              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [errorRed, lightRed],
             ),
           ),
         ),
@@ -29,8 +36,9 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
           "Barang Keluar",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 20,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
@@ -40,7 +48,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFE53935)),
+              valueColor: AlwaysStoppedAnimation<Color>(errorRed),
             ),
           );
         }
@@ -50,18 +58,25 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.arrow_upward_rounded,
-                  size: 80,
-                  color: Colors.grey[300],
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: errorRed.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.arrow_upward_rounded,
+                    size: 60,
+                    color: errorRed.withOpacity(0.5),
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Text(
                   "Belum ada transaksi",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: primaryBrown.withOpacity(0.7),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -69,7 +84,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                   "Tap tombol + untuk menambah",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[400],
+                    color: Colors.grey[500],
                   ),
                 ),
               ],
@@ -78,48 +93,50 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           itemCount: controller.barangKeluarList.length,
           itemBuilder: (context, index) {
             final data = controller.barangKeluarList[index];
 
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: primaryBrown.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 child: Row(
                   children: [
-                    // Icon
                     Container(
-                      padding: const EdgeInsets.all(14),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFE53935),
-                            Color(0xFFEF5350),
-                          ],
+                          colors: [errorRed, lightRed],
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: errorRed.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: const Icon(
                         Icons.arrow_upward_rounded,
                         color: Colors.white,
-                        size: 28,
+                        size: 26,
                       ),
                     ),
-                    const SizedBox(width: 16),
-                    // Content
+                    const SizedBox(width: 18),
                     Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,12 +144,12 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                           Text(
                             data['barang']['nama_barang'] ?? '',
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF4A2C2A),
+                              color: primaryBrown,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               Icon(
@@ -140,7 +157,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                                 size: 16,
                                 color: Colors.grey[600],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 6),
                               Text(
                                 data['tanggal_keluar'] ?? '-',
                                 style: TextStyle(
@@ -150,32 +167,33 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 8),
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 10,
-                              vertical: 4,
+                              horizontal: 12,
+                              vertical: 6,
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(8),
+                              gradient: LinearGradient(
+                                colors: [errorRed.withOpacity(0.2), errorRed.withOpacity(0.1)],
+                              ),
+                              borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
                               "Jumlah: ${data['jumlah']}",
                               style: const TextStyle(
                                 fontSize: 13,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.red,
+                                fontWeight: FontWeight.w700,
+                                color: errorRed,
                               ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                    // Action Menu
                     PopupMenuButton(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       icon: Icon(
                         Icons.more_vert_rounded,
@@ -195,7 +213,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                             children: [
                               Icon(Icons.edit_rounded, color: Colors.blue, size: 20),
                               SizedBox(width: 12),
-                              Text("Edit"),
+                              Text("Edit", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -205,7 +223,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                             children: [
                               Icon(Icons.delete_rounded, color: Colors.red, size: 20),
                               SizedBox(width: 12),
-                              Text("Hapus"),
+                              Text("Hapus", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -220,7 +238,7 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
       }),
 
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: const Color(0xFFE53935),
+        backgroundColor: errorRed,
         onPressed: () => _showForm(),
         icon: const Icon(Icons.add_rounded, color: Colors.white),
         label: const Text(
@@ -230,31 +248,23 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 4,
+        elevation: 6,
       ),
     );
   }
 
   void _showForm({dynamic data}) {
-    final barangIdC = TextEditingController(
-        text: data != null ? data['barang_id'].toString() : '');
-    final tanggalC = TextEditingController(
-        text: data != null ? data['tanggal_keluar'] : '');
-    final jumlahC = TextEditingController(
-        text: data != null ? data['jumlah'].toString() : '');
+    final barangIdC = TextEditingController(text: data != null ? data['barang_id'].toString() : '');
+    final tanggalC = TextEditingController(text: data != null ? data['tanggal_keluar'] : '');
+    final jumlahC = TextEditingController(text: data != null ? data['jumlah'].toString() : '');
 
     Get.dialog(
       Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           constraints: const BoxConstraints(maxWidth: 500),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-          ),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -263,175 +273,60 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFFE53935),
-                            Color(0xFFEF5350),
-                          ],
-                        ),
-                        borderRadius: BorderRadius.circular(10),
+                        gradient: const LinearGradient(colors: [errorRed, lightRed]),
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Icon(
-                        Icons.arrow_upward_rounded,
-                        color: Colors.white,
-                        size: 24,
-                      ),
+                      child: const Icon(Icons.arrow_upward_rounded, color: Colors.white, size: 24),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: Text(
                         data == null ? "Tambah Barang Keluar" : "Edit Barang Keluar",
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF4A2C2A),
-                        ),
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: primaryBrown),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
-                TextField(
-                  controller: barangIdC,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Barang ID",
-                    hintText: "Masukkan ID barang",
-                    prefixIcon: const Icon(
-                      Icons.inventory_2_outlined,
-                      color: Color(0xFFE53935),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE53935),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: tanggalC,
-                  decoration: InputDecoration(
-                    labelText: "Tanggal",
-                    hintText: "YYYY-MM-DD",
-                    prefixIcon: const Icon(
-                      Icons.calendar_today_outlined,
-                      color: Color(0xFFE53935),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE53935),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 16),
-                TextField(
-                  controller: jumlahC,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: "Jumlah",
-                    hintText: "Masukkan jumlah barang",
-                    prefixIcon: const Icon(
-                      Icons.numbers_rounded,
-                      color: Color(0xFFE53935),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey[300]!),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFE53935),
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
+                _buildTextField(barangIdC, "Barang ID", Icons.inventory_2_outlined, TextInputType.number),
+                const SizedBox(height: 18),
+                _buildTextField(tanggalC, "Tanggal (YYYY-MM-DD)", Icons.calendar_today_outlined, TextInputType.text),
+                const SizedBox(height: 18),
+                _buildTextField(jumlahC, "Jumlah", Icons.numbers_rounded, TextInputType.number),
+                const SizedBox(height: 28),
                 Row(
                   children: [
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Get.back(),
                         style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           side: BorderSide(color: Colors.grey[300]!),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                         ),
-                        child: const Text(
-                          "Batal",
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: const Text("Batal", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 15)),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
                           if (data == null) {
-                            controller.tambahBarangKeluar(
-                              barangIdC.text,
-                              tanggalC.text,
-                              jumlahC.text,
-                            );
+                            controller.tambahBarangKeluar(barangIdC.text, tanggalC.text, jumlahC.text);
                           } else {
-                            controller.updateBarangKeluar(
-                              data['id'],
-                              barangIdC.text,
-                              tanggalC.text,
-                              jumlahC.text,
-                            );
+                            controller.updateBarangKeluar(data['id'], barangIdC.text, tanggalC.text, jumlahC.text);
                           }
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          backgroundColor: const Color(0xFFE53935),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 2,
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: errorRed,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                          elevation: 3,
                         ),
-                        child: Text(
-                          data == null ? "Simpan" : "Update",
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        child: Text(data == null ? "Simpan" : "Update", style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
                       ),
                     ),
                   ],
@@ -444,95 +339,59 @@ class BarangKeluarView extends GetView<BarangKeluarController> {
     );
   }
 
+  Widget _buildTextField(TextEditingController controller, String label, IconData icon, TextInputType type) {
+    return TextField(
+      controller: controller,
+      keyboardType: type,
+      style: const TextStyle(fontSize: 15),
+      decoration: InputDecoration(
+        labelText: label,
+        prefixIcon: Icon(icon, color: errorRed),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: Colors.grey[300]!)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: BorderSide(color: Colors.grey[300]!)),
+        focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14), borderSide: const BorderSide(color: errorRed, width: 2)),
+      ),
+    );
+  }
+
   void _confirmDelete(int id) {
     Get.dialog(
       Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
         child: Container(
-          padding: const EdgeInsets.all(24),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-          ),
+          padding: const EdgeInsets.all(28),
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(24)),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.red.withOpacity(0.1),
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.delete_rounded,
-                  color: Colors.red,
-                  size: 40,
-                ),
+                padding: const EdgeInsets.all(18),
+                decoration: BoxDecoration(color: Colors.red.withOpacity(0.1), shape: BoxShape.circle),
+                child: const Icon(Icons.delete_rounded, color: Colors.red, size: 44),
               ),
-              const SizedBox(height: 16),
-              const Text(
-                "Hapus Transaksi?",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Text(
-                "Data yang dihapus tidak dapat dikembalikan",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey[600],
-                ),
-              ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 20),
+              const Text("Hapus Transaksi?", style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: primaryBrown)),
+              const SizedBox(height: 10),
+              Text("Data yang dihapus tidak dapat dikembalikan", textAlign: TextAlign.center, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+              const SizedBox(height: 28),
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Get.back(),
-                      style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        side: BorderSide(color: Colors.grey[300]!),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: const Text(
-                        "Batal",
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      style: OutlinedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16), side: BorderSide(color: Colors.grey[300]!), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))),
+                      child: const Text("Batal", style: TextStyle(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 15)),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
                         controller.deleteBarangKeluar(id);
                         Get.back();
                       },
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        backgroundColor: Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        elevation: 2,
-                      ),
-                      child: const Text(
-                        "Ya, Hapus",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16), backgroundColor: Colors.red, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)), elevation: 3),
+                      child: const Text("Ya, Hapus", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 15)),
                     ),
                   ),
                 ],

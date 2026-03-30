@@ -5,6 +5,13 @@ import 'package:gudangku/app/modules/splash_screen/controllers/splash_screen_con
 class SplashScreenView extends GetView<SplashScreenController> {
   SplashScreenView({Key? key}) : super(key: key);
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color mediumBrown = Color(0xFF5D4037);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -17,9 +24,9 @@ class SplashScreenView extends GetView<SplashScreenController> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF4A2C2A), // Dark Brown
-              Color(0xFF6B4423), // Medium Brown
-              Color(0xFF8B5A3C), // Light Brown
+              primaryBrown,
+              mediumBrown,
+              Color(0xFF6B4423),
             ],
           ),
         ),
@@ -90,8 +97,8 @@ class SplashScreenView extends GetView<SplashScreenController> {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.3),
-                      blurRadius: 25,
+                      color: accentGold.withOpacity(0.5),
+                      blurRadius: 30,
                       offset: const Offset(0, 15),
                     ),
                   ],
@@ -99,14 +106,14 @@ class SplashScreenView extends GetView<SplashScreenController> {
                 child: Container(
                   width: isSmallScreen ? 80 : 100,
                   height: isSmallScreen ? 80 : 100,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: const LinearGradient(
+                    gradient: LinearGradient(
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color(0xFF6B4423), // Medium Brown
-                        Color(0xFFD4A574), // Gold/Tan
+                        mediumBrown,
+                        accentGold,
                       ],
                     ),
                   ),
@@ -140,7 +147,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
                   'GudangKu',
                   style: TextStyle(
                     fontSize: isSmallScreen ? 32 : 40,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
                     color: Colors.white,
                     letterSpacing: 2.0,
                   ),
@@ -150,7 +157,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
                   'Sistem Manajemen Mebel',
                   style: TextStyle(
                     fontSize: isSmallScreen ? 16 : 20,
-                    color: const Color(0xFFD4A574),
+                    color: accentGold,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 1.2,
                   ),
@@ -165,7 +172,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
                     color: Colors.white.withOpacity(0.15),
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(
-                      color: Colors.white.withOpacity(0.3),
+                      color: accentGold.withOpacity(0.5),
                     ),
                   ),
                   child: Row(
@@ -173,7 +180,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
                     children: [
                       const Icon(
                         Icons.inventory_2_outlined,
-                        color: Color(0xFFD4A574),
+                        color: accentGold,
                         size: 18,
                       ),
                       const SizedBox(width: 8),
@@ -204,7 +211,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
           children: const [
             Icon(
               Icons.chair_outlined,
-              color: Color(0xFFD4A574),
+              color: accentGold,
               size: 20,
             ),
             SizedBox(width: 8),
@@ -236,14 +243,14 @@ class SplashScreenView extends GetView<SplashScreenController> {
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
                     colors: [
-                      Color(0xFFD4A574), // Gold
-                      Color(0xFFE6C89C), // Light Gold
+                      accentGold,
+                      lightGold,
                     ],
                   ),
                   borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFFD4A574).withOpacity(0.5),
+                      color: accentGold.withOpacity(0.5),
                       blurRadius: 8,
                     ),
                   ],
@@ -257,7 +264,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
           () => Text(
             '${(controller.progress.value * 100).toInt()}%',
             style: const TextStyle(
-              color: Color(0xFFD4A574),
+              color: accentGold,
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),
@@ -282,7 +289,7 @@ class SplashScreenView extends GetView<SplashScreenController> {
             children: const [
               Icon(
                 Icons.verified_outlined,
-                color: Color(0xFFD4A574),
+                color: accentGold,
                 size: 16,
               ),
               SizedBox(width: 6),

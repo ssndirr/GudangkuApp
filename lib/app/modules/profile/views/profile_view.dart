@@ -6,21 +6,27 @@ import '../../auth/controllers/auth_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   const ProfileView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     final authC = Get.find<AuthController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF6B4423),
-                Color(0xFF8B5A3C),
-              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [primaryBrown, Color(0xFF5D4037)],
             ),
           ),
         ),
@@ -28,8 +34,9 @@ class ProfileView extends GetView<ProfileController> {
           'Profil Saya',
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 20,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
@@ -39,75 +46,75 @@ class ProfileView extends GetView<ProfileController> {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 20),
 
               // Profile Avatar Section
               Container(
-                width: 110,
-                height: 110,
+                width: 120,
+                height: 120,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF6B4423),
-                      Color(0xFF8B5A3C),
-                    ],
+                    colors: [accentGold, lightGold],
                   ),
                   border: Border.all(
-                    color: const Color(0xFFD4A574),
-                    width: 4,
+                    color: Colors.white,
+                    width: 5,
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6B4423).withOpacity(0.3),
-                      blurRadius: 15,
-                      offset: const Offset(0, 8),
+                      color: accentGold.withOpacity(0.4),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
                     ),
                   ],
                 ),
                 child: const Icon(
                   Icons.person,
-                  size: 50,
+                  size: 56,
                   color: Colors.white,
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 24),
 
               // User Name
               Text(
                 controller.userName.value,
                 style: const TextStyle(
-                  fontSize: 24,
+                  fontSize: 26,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
                 textAlign: TextAlign.center,
               ),
 
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
 
               // User Email Badge
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF6B4423).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
+                  color: accentGold.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(24),
+                  border: Border.all(
+                    color: accentGold.withOpacity(0.3),
+                  ),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     const Icon(
                       Icons.email_outlined,
-                      size: 16,
-                      color: Color(0xFF6B4423),
+                      size: 18,
+                      color: accentGold,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: 10),
                     Text(
                       controller.userEmail.value,
                       style: const TextStyle(
-                        color: Color(0xFF6B4423),
-                        fontWeight: FontWeight.w500,
+                        color: primaryBrown,
+                        fontWeight: FontWeight.w600,
                         fontSize: 14,
                       ),
                     ),
@@ -115,24 +122,21 @@ class ProfileView extends GetView<ProfileController> {
                 ),
               ),
 
-              const SizedBox(height: 8),
+              const SizedBox(height: 12),
 
               // User Role Badge
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFF6B4423),
-                      Color(0xFF8B5A3C),
-                    ],
+                    colors: [accentGold, lightGold],
                   ),
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: const Color(0xFF6B4423).withOpacity(0.3),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
+                      color: accentGold.withOpacity(0.4),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
                   ],
                 ),
@@ -142,24 +146,24 @@ class ProfileView extends GetView<ProfileController> {
                     color: Colors.white,
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    letterSpacing: 1.2,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ),
 
-              const SizedBox(height: 32),
+              const SizedBox(height: 36),
 
               // User Info Card
               Container(
-                padding: const EdgeInsets.all(20),
+                padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(20),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 10,
-                      offset: const Offset(0, 4),
+                      color: primaryBrown.withOpacity(0.08),
+                      blurRadius: 15,
+                      offset: const Offset(0, 5),
                     ),
                   ],
                 ),
@@ -170,72 +174,72 @@ class ProfileView extends GetView<ProfileController> {
                       children: const [
                         Icon(
                           Icons.info_outline_rounded,
-                          color: Color(0xFF6B4423),
-                          size: 22,
+                          color: accentGold,
+                          size: 24,
                         ),
-                        SizedBox(width: 10),
+                        SizedBox(width: 12),
                         Text(
                           'Informasi Akun',
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: 18,
                             fontWeight: FontWeight.bold,
-                            color: Color(0xFF4A2C2A),
+                            color: primaryBrown,
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     _buildInfoRow(
                       icon: Icons.person_outline_rounded,
                       label: 'Nama Lengkap',
                       value: controller.userName.value,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
                     Divider(height: 1, color: Colors.grey[200]),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
                     _buildInfoRow(
                       icon: Icons.email_outlined,
                       label: 'Email',
                       value: controller.userEmail.value,
                     ),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
                     Divider(height: 1, color: Colors.grey[200]),
-                    const SizedBox(height: 16),
+                    const SizedBox(height: 18),
                     _buildInfoRow(
                       icon: Icons.badge_outlined,
-                      label: 'Role',
+                      label: 'Status',
                       value: controller.userRole.value,
                     ),
                   ],
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
 
               // Logout Button
               SizedBox(
                 width: double.infinity,
-                height: 52,
+                height: 56,
                 child: ElevatedButton(
                   onPressed: () {
                     Get.defaultDialog(
                       title: 'Konfirmasi Logout',
                       titleStyle: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF4A2C2A),
-                        fontSize: 18,
+                        color: primaryBrown,
+                        fontSize: 20,
                       ),
                       middleText: 'Apakah Anda yakin ingin keluar dari akun?',
-                      middleTextStyle: const TextStyle(
+                      middleTextStyle: TextStyle(
                         fontSize: 14,
-                        color: Color(0xFF4A2C2A),
+                        color: Colors.grey[700],
                       ),
                       textConfirm: 'Ya, Keluar',
                       textCancel: 'Batal',
                       confirmTextColor: Colors.white,
                       buttonColor: const Color(0xFFE53935),
-                      cancelTextColor: const Color(0xFF6B4423),
-                      radius: 12,
+                      cancelTextColor: accentGold,
+                      radius: 14,
                       onConfirm: () {
                         Get.back();
                         authC.logout();
@@ -250,7 +254,7 @@ class ProfileView extends GetView<ProfileController> {
                             color: Colors.white,
                           ),
                           margin: const EdgeInsets.all(16),
-                          borderRadius: 12,
+                          borderRadius: 14,
                         );
                       },
                     );
@@ -259,9 +263,9 @@ class ProfileView extends GetView<ProfileController> {
                     backgroundColor: const Color(0xFFE53935),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    elevation: 3,
+                    elevation: 4,
                     shadowColor: const Color(0xFFE53935).withOpacity(0.4),
                   ),
                   child: Row(
@@ -303,12 +307,14 @@ class ProfileView extends GetView<ProfileController> {
     return Row(
       children: [
         Container(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
-            color: const Color(0xFF6B4423).withOpacity(0.1),
-            borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+              colors: [accentGold.withOpacity(0.2), accentGold.withOpacity(0.1)],
+            ),
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: Icon(icon, color: const Color(0xFF6B4423), size: 22),
+          child: Icon(icon, color: accentGold, size: 22),
         ),
         const SizedBox(width: 16),
         Expanded(
@@ -323,13 +329,13 @@ class ProfileView extends GetView<ProfileController> {
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 6),
               Text(
                 value,
                 style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: Color(0xFF4A2C2A),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: primaryBrown,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -342,49 +348,40 @@ class ProfileView extends GetView<ProfileController> {
 
   Widget _buildBottomNavBar(int currentIndex) {
     return Container(
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       decoration: BoxDecoration(
+        color: primaryBrown,
+        borderRadius: BorderRadius.circular(25),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, -5),
+            color: primaryBrown.withOpacity(0.4),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
           ),
         ],
       ),
-      child: BottomNavigationBar(
-        currentIndex: currentIndex,
-        selectedItemColor: const Color(0xFF6B4423),
-        unselectedItemColor: Colors.grey,
-        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
-        elevation: 0,
-        onTap: (index) {
-          if (index == 0) {
-            Get.offAllNamed('/home');
-          } else if (index == 1) {
-            Get.offAllNamed('/dashboard');
-          } else if (index == 2) {
-            Get.offAllNamed('/profile');
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            activeIcon: Icon(Icons.home),
-            label: 'Beranda',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard_outlined),
-            activeIcon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: 'Profil',
-          ),
-        ],
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: BottomNavigationBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          currentIndex: currentIndex,
+          selectedItemColor: lightGold,
+          unselectedItemColor: Colors.white.withOpacity(0.5),
+          showSelectedLabels: true,
+          showUnselectedLabels: false,
+          type: BottomNavigationBarType.fixed,
+          onTap: (index) {
+            if (index == 0) Get.offAllNamed('/home');
+            if (index == 1) Get.offAllNamed('/dashboard');
+            if (index == 2) Get.offAllNamed('/profile');
+          },
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home_max_rounded), label: 'Beranda'),
+            BottomNavigationBarItem(icon: Icon(Icons.analytics_outlined), label: 'Stats'),
+            BottomNavigationBarItem(icon: Icon(Icons.account_circle_outlined), label: 'Profil'),
+          ],
+        ),
       ),
     );
   }

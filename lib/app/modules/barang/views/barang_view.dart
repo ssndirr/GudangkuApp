@@ -5,43 +5,49 @@ import '../controllers/barang_controller.dart';
 class BarangView extends GetView<BarangController> {
   const BarangView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF6B4423),
-                Color(0xFF8B5A3C),
-              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [primaryBrown, Color(0xFF5D4037)],
             ),
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: lightGold),
           onPressed: () => Get.back(),
         ),
         title: const Text(
           "Data Barang",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 20,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
       ),
 
-      // ================= BODY =================
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6B4423)),
+              valueColor: AlwaysStoppedAnimation<Color>(accentGold),
             ),
           );
         }
@@ -51,18 +57,25 @@ class BarangView extends GetView<BarangController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.inventory_2_outlined,
-                  size: 80,
-                  color: Colors.grey[300],
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: accentGold.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.inventory_2_outlined,
+                    size: 60,
+                    color: accentGold.withOpacity(0.5),
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Text(
                   "Belum ada barang",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: primaryBrown.withOpacity(0.7),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -70,7 +83,7 @@ class BarangView extends GetView<BarangController> {
                   "Tap tombol + untuk menambah",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[400],
+                    color: Colors.grey[500],
                   ),
                 ),
               ],
@@ -79,47 +92,51 @@ class BarangView extends GetView<BarangController> {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           itemCount: controller.barangList.length,
           itemBuilder: (context, index) {
             final barang = controller.barangList[index];
 
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: primaryBrown.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
               child: Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 child: Row(
                   children: [
                     // Icon
                     Container(
-                      padding: const EdgeInsets.all(14),
+                      padding: const EdgeInsets.all(16),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF6B4423),
-                            Color(0xFF8B5A3C),
-                          ],
+                          colors: [accentGold, lightGold],
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
+                        boxShadow: [
+                          BoxShadow(
+                            color: accentGold.withOpacity(0.3),
+                            blurRadius: 8,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
                       ),
                       child: const Icon(
                         Icons.inventory_2_rounded,
                         color: Colors.white,
-                        size: 28,
+                        size: 26,
                       ),
                     ),
-                    const SizedBox(width: 16),
+                    const SizedBox(width: 18),
                     // Content
                     Expanded(
                       child: Column(
@@ -128,12 +145,12 @@ class BarangView extends GetView<BarangController> {
                           Text(
                             barang['nama_barang'] ?? '',
                             style: const TextStyle(
-                              fontSize: 16,
+                              fontSize: 17,
                               fontWeight: FontWeight.bold,
-                              color: Color(0xFF4A2C2A),
+                              color: primaryBrown,
                             ),
                           ),
-                          const SizedBox(height: 8),
+                          const SizedBox(height: 10),
                           Row(
                             children: [
                               Icon(
@@ -141,7 +158,7 @@ class BarangView extends GetView<BarangController> {
                                 size: 16,
                                 color: Colors.grey[600],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 6),
                               Text(
                                 barang['kategori']?['nama_kategori'] ?? '-',
                                 style: TextStyle(
@@ -151,7 +168,7 @@ class BarangView extends GetView<BarangController> {
                               ),
                             ],
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 6),
                           Row(
                             children: [
                               Icon(
@@ -159,7 +176,7 @@ class BarangView extends GetView<BarangController> {
                                 size: 16,
                                 color: Colors.grey[600],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(width: 6),
                               Text(
                                 barang['ruangan']?['nama_ruangan'] ?? '-',
                                 style: TextStyle(
@@ -175,7 +192,7 @@ class BarangView extends GetView<BarangController> {
                     // Action Menu
                     PopupMenuButton<String>(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                       icon: Icon(
                         Icons.more_vert_rounded,
@@ -195,7 +212,7 @@ class BarangView extends GetView<BarangController> {
                             children: [
                               Icon(Icons.edit_rounded, color: Colors.blue, size: 20),
                               SizedBox(width: 12),
-                              Text("Edit"),
+                              Text("Edit", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -205,7 +222,7 @@ class BarangView extends GetView<BarangController> {
                             children: [
                               Icon(Icons.delete_rounded, color: Colors.red, size: 20),
                               SizedBox(width: 12),
-                              Text("Hapus"),
+                              Text("Hapus", style: TextStyle(fontWeight: FontWeight.w500)),
                             ],
                           ),
                         ),
@@ -219,24 +236,22 @@ class BarangView extends GetView<BarangController> {
         );
       }),
 
-      // ================= FLOAT BUTTON =================
       floatingActionButton: FloatingActionButton.extended(
-        backgroundColor: const Color(0xFF6B4423),
+        backgroundColor: accentGold,
         onPressed: () => _showForm(context),
-        icon: const Icon(Icons.add_rounded, color: Colors.white),
+        icon: const Icon(Icons.add_rounded, color: primaryBrown),
         label: const Text(
           'Tambah',
           style: TextStyle(
-            color: Colors.white,
+            color: primaryBrown,
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 4,
+        elevation: 6,
       ),
     );
   }
 
-  // ================= FORM TAMBAH & EDIT =================
   void _showForm(BuildContext context, {dynamic barang}) {
     final namaC = TextEditingController(
       text: barang != null ? barang['nama_barang'] : '',
@@ -253,14 +268,14 @@ class BarangView extends GetView<BarangController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           constraints: const BoxConstraints(maxWidth: 500),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: SingleChildScrollView(
             child: Column(
@@ -270,15 +285,12 @@ class BarangView extends GetView<BarangController> {
                 Row(
                   children: [
                     Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(12),
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
-                          colors: [
-                            Color(0xFF6B4423),
-                            Color(0xFF8B5A3C),
-                          ],
+                          colors: [accentGold, lightGold],
                         ),
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(12),
                       ),
                       child: const Icon(
                         Icons.inventory_2_rounded,
@@ -286,112 +298,115 @@ class BarangView extends GetView<BarangController> {
                         size: 24,
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Text(
                       barang == null ? "Tambah Barang" : "Edit Barang",
                       style: const TextStyle(
-                        fontSize: 20,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        color: Color(0xFF4A2C2A),
+                        color: primaryBrown,
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
                 TextField(
                   controller: namaC,
                   autofocus: true,
+                  style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: "Nama Barang",
                     hintText: "Masukkan nama barang",
                     prefixIcon: const Icon(
                       Icons.edit_rounded,
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: const BorderSide(
-                        color: Color(0xFF6B4423),
+                        color: accentGold,
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
                 TextField(
                   controller: kategoriC,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: "Kategori ID",
                     hintText: "Masukkan ID kategori",
                     prefixIcon: const Icon(
                       Icons.category_outlined,
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: const BorderSide(
-                        color: Color(0xFF6B4423),
+                        color: accentGold,
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 18),
                 TextField(
                   controller: ruanganC,
                   keyboardType: TextInputType.number,
+                  style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     labelText: "Ruangan ID",
                     hintText: "Masukkan ID ruangan",
                     prefixIcon: const Icon(
                       Icons.meeting_room_outlined,
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: BorderSide(color: Colors.grey[300]!),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(14),
                       borderSide: const BorderSide(
-                        color: Color(0xFF6B4423),
+                        color: accentGold,
                         width: 2,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 28),
                 Row(
                   children: [
                     Expanded(
                       child: OutlinedButton(
                         onPressed: () => Get.back(),
                         style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
                           side: BorderSide(color: Colors.grey[300]!),
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(14),
                           ),
                         ),
                         child: const Text(
@@ -399,11 +414,12 @@ class BarangView extends GetView<BarangController> {
                           style: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(width: 12),
+                    const SizedBox(width: 14),
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
@@ -416,7 +432,7 @@ class BarangView extends GetView<BarangController> {
                               icon: const Icon(Icons.warning_rounded, color: Colors.white),
                               snackPosition: SnackPosition.BOTTOM,
                               margin: const EdgeInsets.all(16),
-                              borderRadius: 12,
+                              borderRadius: 14,
                             );
                             return;
                           }
@@ -439,18 +455,19 @@ class BarangView extends GetView<BarangController> {
                           Get.back();
                         },
                         style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 14),
-                          backgroundColor: const Color(0xFF6B4423),
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          backgroundColor: accentGold,
+                          foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(14),
                           ),
-                          elevation: 2,
+                          elevation: 3,
                         ),
                         child: Text(
                           barang == null ? "Simpan" : "Update",
                           style: const TextStyle(
-                            color: Colors.white,
                             fontWeight: FontWeight.bold,
+                            fontSize: 15,
                           ),
                         ),
                       ),
@@ -469,19 +486,19 @@ class BarangView extends GetView<BarangController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.1),
                   shape: BoxShape.circle,
@@ -489,19 +506,19 @@ class BarangView extends GetView<BarangController> {
                 child: const Icon(
                   Icons.delete_rounded,
                   color: Colors.red,
-                  size: 40,
+                  size: 44,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               const Text(
                 "Hapus Barang?",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 "Barang yang dihapus tidak dapat dikembalikan",
                 textAlign: TextAlign.center,
@@ -510,17 +527,17 @@ class BarangView extends GetView<BarangController> {
                   color: Colors.grey[600],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Get.back(),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         side: BorderSide(color: Colors.grey[300]!),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       child: const Text(
@@ -528,11 +545,12 @@ class BarangView extends GetView<BarangController> {
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -540,18 +558,19 @@ class BarangView extends GetView<BarangController> {
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                        elevation: 2,
+                        elevation: 3,
                       ),
                       child: const Text(
                         "Ya, Hapus",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),

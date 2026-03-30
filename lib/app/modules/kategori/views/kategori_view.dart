@@ -5,58 +5,63 @@ import '../controllers/kategori_controller.dart';
 class KategoriView extends GetView<KategoriController> {
   const KategoriView({super.key});
 
+  // Premium Color Palette
+  static const Color primaryBrown = Color(0xFF3E2723);
+  static const Color accentGold = Color(0xFFD4AF37);
+  static const Color lightGold = Color(0xFFFFD700);
+  static const Color softBeige = Color(0xFFFDFBF7);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F0),
+      backgroundColor: softBeige,
       appBar: AppBar(
         elevation: 0,
+        toolbarHeight: 70,
         flexibleSpace: Container(
           decoration: const BoxDecoration(
             gradient: LinearGradient(
-              colors: [
-                Color(0xFF6B4423),
-                Color(0xFF8B5A3C),
-              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [primaryBrown, Color(0xFF5D4037)],
             ),
           ),
         ),
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: const Icon(Icons.arrow_back, color: lightGold),
           onPressed: () => Get.back(),
         ),
         title: const Text(
           "Kategori Barang",
           style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w900,
             fontSize: 20,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
       ),
 
-      // ================= FLOATING BUTTON =================
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _showForm(),
-        backgroundColor: const Color(0xFF6B4423),
-        icon: const Icon(Icons.add_rounded, color: Colors.white),
+        backgroundColor: accentGold,
+        icon: const Icon(Icons.add_rounded, color: primaryBrown),
         label: const Text(
           'Tambah',
           style: TextStyle(
-            color: Colors.white,
+            color: primaryBrown,
             fontWeight: FontWeight.bold,
           ),
         ),
-        elevation: 4,
+        elevation: 6,
       ),
 
-      // ================= BODY =================
       body: Obx(() {
         if (controller.isLoading.value) {
           return const Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF6B4423)),
+              valueColor: AlwaysStoppedAnimation<Color>(accentGold),
             ),
           );
         }
@@ -66,18 +71,25 @@ class KategoriView extends GetView<KategoriController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.category_outlined,
-                  size: 80,
-                  color: Colors.grey[300],
+                Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: accentGold.withOpacity(0.1),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.category_outlined,
+                    size: 60,
+                    color: accentGold.withOpacity(0.5),
+                  ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
                 Text(
                   "Belum ada kategori",
                   style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+                    fontSize: 18,
+                    color: primaryBrown.withOpacity(0.7),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
@@ -85,7 +97,7 @@ class KategoriView extends GetView<KategoriController> {
                   "Tap tombol + untuk menambah",
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.grey[400],
+                    color: Colors.grey[500],
                   ),
                 ),
               ],
@@ -94,39 +106,43 @@ class KategoriView extends GetView<KategoriController> {
         }
 
         return ListView.builder(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(20),
           itemCount: controller.kategoriList.length,
           itemBuilder: (context, index) {
             var kategori = controller.kategoriList[index];
 
             return Container(
-              margin: const EdgeInsets.only(bottom: 12),
+              margin: const EdgeInsets.only(bottom: 16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 10,
-                    offset: const Offset(0, 4),
+                    color: primaryBrown.withOpacity(0.08),
+                    blurRadius: 15,
+                    offset: const Offset(0, 5),
                   ),
                 ],
               ),
               child: ListTile(
                 contentPadding: const EdgeInsets.symmetric(
                   horizontal: 20,
-                  vertical: 12,
+                  vertical: 14,
                 ),
                 leading: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF6B4423),
-                        Color(0xFF8B5A3C),
-                      ],
+                      colors: [accentGold, lightGold],
                     ),
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
+                    boxShadow: [
+                      BoxShadow(
+                        color: accentGold.withOpacity(0.3),
+                        blurRadius: 8,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: const Icon(
                     Icons.category_rounded,
@@ -138,12 +154,12 @@ class KategoriView extends GetView<KategoriController> {
                   kategori['nama_kategori'],
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Color(0xFF4A2C2A),
+                    fontSize: 17,
+                    color: primaryBrown,
                   ),
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 4),
+                  padding: const EdgeInsets.only(top: 6),
                   child: Text(
                     "ID: ${kategori['id']}",
                     style: TextStyle(
@@ -159,7 +175,7 @@ class KategoriView extends GetView<KategoriController> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.blue.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.edit_rounded, color: Colors.blue),
@@ -175,7 +191,7 @@ class KategoriView extends GetView<KategoriController> {
                     Container(
                       decoration: BoxDecoration(
                         color: Colors.red.withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                       child: IconButton(
                         icon: const Icon(Icons.delete_rounded, color: Colors.red),
@@ -193,9 +209,6 @@ class KategoriView extends GetView<KategoriController> {
     );
   }
 
-  // ======================================================
-  // FORM TAMBAH & EDIT
-  // ======================================================
   void _showForm({int? id, String? nama}) {
     final TextEditingController namaController =
         TextEditingController(text: nama ?? '');
@@ -203,13 +216,13 @@ class KategoriView extends GetView<KategoriController> {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -218,15 +231,12 @@ class KategoriView extends GetView<KategoriController> {
               Row(
                 children: [
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFF6B4423),
-                          Color(0xFF8B5A3C),
-                        ],
+                        colors: [accentGold, lightGold],
                       ),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(12),
                     ),
                     child: const Icon(
                       Icons.category_rounded,
@@ -234,56 +244,57 @@ class KategoriView extends GetView<KategoriController> {
                       size: 24,
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Text(
                     id == null ? "Tambah Kategori" : "Edit Kategori",
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xFF4A2C2A),
+                      color: primaryBrown,
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               TextField(
                 controller: namaController,
                 autofocus: true,
+                style: const TextStyle(fontSize: 15),
                 decoration: InputDecoration(
                   labelText: "Nama Kategori",
                   hintText: "Masukkan nama kategori",
                   prefixIcon: const Icon(
                     Icons.edit_rounded,
-                    color: Color(0xFF6B4423),
+                    color: accentGold,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     borderSide: BorderSide(color: Colors.grey[300]!),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(14),
                     borderSide: const BorderSide(
-                      color: Color(0xFF6B4423),
+                      color: accentGold,
                       width: 2,
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Get.back(),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         side: BorderSide(color: Colors.grey[300]!),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       child: const Text(
@@ -291,11 +302,12 @@ class KategoriView extends GetView<KategoriController> {
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -308,7 +320,7 @@ class KategoriView extends GetView<KategoriController> {
                             icon: const Icon(Icons.warning_rounded, color: Colors.white),
                             snackPosition: SnackPosition.BOTTOM,
                             margin: const EdgeInsets.all(16),
-                            borderRadius: 12,
+                            borderRadius: 14,
                           );
                           return;
                         }
@@ -322,18 +334,19 @@ class KategoriView extends GetView<KategoriController> {
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
-                        backgroundColor: const Color(0xFF6B4423),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: accentGold,
+                        foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                        elevation: 2,
+                        elevation: 3,
                       ),
                       child: Text(
                         id == null ? "Simpan" : "Update",
                         style: const TextStyle(
-                          color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
@@ -347,26 +360,23 @@ class KategoriView extends GetView<KategoriController> {
     );
   }
 
-  // ======================================================
-  // KONFIRM DELETE
-  // ======================================================
   void _confirmDelete(int id) {
     Get.dialog(
       Dialog(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(24),
         ),
         child: Container(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(28),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(24),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
                   color: Colors.red.withOpacity(0.1),
                   shape: BoxShape.circle,
@@ -374,19 +384,19 @@ class KategoriView extends GetView<KategoriController> {
                 child: const Icon(
                   Icons.delete_rounded,
                   color: Colors.red,
-                  size: 40,
+                  size: 44,
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 20),
               const Text(
                 "Hapus Kategori?",
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.bold,
-                  color: Color(0xFF4A2C2A),
+                  color: primaryBrown,
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 10),
               Text(
                 "Kategori yang dihapus tidak dapat dikembalikan",
                 textAlign: TextAlign.center,
@@ -395,17 +405,17 @@ class KategoriView extends GetView<KategoriController> {
                   color: Colors.grey[600],
                 ),
               ),
-              const SizedBox(height: 24),
+              const SizedBox(height: 28),
               Row(
                 children: [
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => Get.back(),
                       style: OutlinedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         side: BorderSide(color: Colors.grey[300]!),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
                       ),
                       child: const Text(
@@ -413,11 +423,12 @@ class KategoriView extends GetView<KategoriController> {
                         style: TextStyle(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 14),
                   Expanded(
                     child: ElevatedButton(
                       onPressed: () {
@@ -425,18 +436,19 @@ class KategoriView extends GetView<KategoriController> {
                         Get.back();
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         backgroundColor: Colors.red,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(14),
                         ),
-                        elevation: 2,
+                        elevation: 3,
                       ),
                       child: const Text(
                         "Ya, Hapus",
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
                       ),
                     ),
