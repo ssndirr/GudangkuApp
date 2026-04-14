@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../modules/auth/views/login_view.dart';
 import '../modules/barang-keluar/bindings/barang_keluar_binding.dart';
 import '../modules/barang-keluar/views/barang_keluar_view.dart';
@@ -11,6 +10,7 @@ import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/home/views/homeshow.dart';
 import '../modules/kategori/bindings/kategori_binding.dart';
 import '../modules/kategori/views/kategori_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
@@ -31,6 +31,11 @@ class AppPages {
     GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
+      binding: HomeBinding(),
+    ),
+    GetPage(
+      name: _Paths.HOME_SHOW,
+      page: () => const HomeShowView(),
       binding: HomeBinding(),
     ),
     GetPage(
@@ -58,21 +63,21 @@ class AppPages {
       page: () => const DashboardView(),
       binding: DashboardBinding(),
     ),
-    GetPage(
-      name: _Paths.BARANG,
-      page: () => const BarangView(),
-      binding: BarangBinding(),
-    ),
-    GetPage(
-      name: _Paths.KATEGORI,
-      page: () => const KategoriView(),
-      binding: KategoriBinding(),
-    ),
-    GetPage(
-      name: _Paths.RUANGAN,
-      page: () => const RuanganView(),
-      binding: RuanganBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.BARANG,
+    //   page: () => const BarangView(),
+    //   binding: BarangBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.KATEGORI,
+    //   page: () => const KategoriView(),
+    //   binding: KategoriBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.RUANGAN,
+    //   page: () => const RuanganView(),
+    //   binding: RuanganBinding(),
+    // ),
     GetPage(
       name: _Paths.BARANG_MASUK,
       page: () => const BarangMasukView(),

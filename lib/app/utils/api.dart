@@ -1,6 +1,7 @@
 class Api {
   // GANTI sesuai environment lo
-  static const String baseUrl = "http://localhost:8000/api";
+  // static const String baseUrl = "http://localhost:8000/api";
+  static const String baseUrl = "https://cjmgudangku.web.id/api";
 
   static const String login = "$baseUrl/login";
   static const String kategori = "$baseUrl/kategori";

@@ -330,15 +330,13 @@ class HomeView extends GetView<HomeController> {
                 Padding(
                   padding: const EdgeInsets.only(right: 12),
                   child: TextButton(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                      foregroundColor: accentGold,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        side: const BorderSide(color: accentGold, width: 1),
-                      ),
-                    ),
+                    onPressed: () => Get.toNamed('/homeshow', arguments: {
+                      'nama_barang': barang['nama_barang'],
+                      'kategori'   : barang['kategori']?['nama_kategori'] ?? '-',
+                      'ruangan'    : barang['ruangan']?['nama_ruangan'] ?? '-',
+                      'lokasi'     : barang['ruangan']?['lokasi'] ?? '-',
+                      'stok'       : barang['stok'] ?? 0,
+                    }),
                     child: const Text("DETAIL", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 12)),
                   ),
                 ),

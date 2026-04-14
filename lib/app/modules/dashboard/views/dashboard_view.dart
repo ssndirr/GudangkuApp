@@ -424,7 +424,7 @@ class DashboardView extends GetView<DashboardController> {
           color: Colors.white,
           fontWeight: FontWeight.w900,
           fontSize: 20,
-          letterSpacing: 0.5,
+          letterSpacing: 0.5
         ),
       ),
       centerTitle: true,
