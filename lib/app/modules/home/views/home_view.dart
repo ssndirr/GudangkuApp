@@ -52,25 +52,6 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
         centerTitle: true,
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: PopupMenuButton<String>(
-              icon: const Icon(Icons.tune_rounded, color: lightGold, size: 28),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              onSelected: (value) {
-                if (value == 'masuk') Get.toNamed('/barang-masuk');
-                if (value == 'keluar') Get.toNamed('/barang-keluar');
-              },
-              itemBuilder: (context) => [
-                _buildPopupItem('masuk', Icons.add_circle_outline, "Barang Masuk", Colors.green),
-                _buildPopupItem('keluar', Icons.remove_circle_outline, "Barang Keluar", Colors.redAccent),
-              ],
-            ),
-          ),
-        ],
       ),
 
       // ================= BODY =================
@@ -345,20 +326,6 @@ class HomeView extends GetView<HomeController> {
           ),
         );
       },
-    );
-  }
-
-  // --- WIDGET HELPER: POPUP ITEM ---
-  PopupMenuItem<String> _buildPopupItem(String value, IconData icon, String title, Color color) {
-    return PopupMenuItem(
-      value: value,
-      child: Row(
-        children: [
-          Icon(icon, color: color, size: 22),
-          const SizedBox(width: 12),
-          Text(title, style: const TextStyle(fontWeight: FontWeight.w500)),
-        ],
-      ),
     );
   }
 

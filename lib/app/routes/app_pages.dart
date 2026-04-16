@@ -78,15 +78,15 @@ class AppPages {
     //   page: () => const RuanganView(),
     //   binding: RuanganBinding(),
     // ),
-    GetPage(
-      name: _Paths.BARANG_MASUK,
-      page: () => const BarangMasukView(),
-      binding: BarangMasukBinding(),
-    ),
-    GetPage(
-      name: _Paths.BARANG_KELUAR,
-      page: () => const BarangKeluarView(),
-      binding: BarangKeluarBinding(),
-    ),
+    // GetPage(
+    //   name: _Paths.BARANG_MASUK,
+    //   page: () => const BarangMasukView(),
+    //   binding: BarangMasukBinding(),
+    // ),
+    // GetPage(
+    //   name: _Paths.BARANG_KELUAR,
+    //   page: () => const BarangKeluarView(),
+    //   binding: BarangKeluarBinding(),
+    // ),
   ];
 }

@@ -12,8 +12,8 @@ abstract class Routes {
   // static const KATEGORI = _Paths.KATEGORI;
   // static const RUANGAN = _Paths.RUANGAN;
   // static const BARANG = _Paths.BARANG;
-  static const BARANG_MASUK = _Paths.BARANG_MASUK;
-  static const BARANG_KELUAR = _Paths.BARANG_KELUAR;
+  // static const BARANG_MASUK = _Paths.BARANG_MASUK;
+  // static const BARANG_KELUAR = _Paths.BARANG_KELUAR;
 }
 
 abstract class _Paths {
@@ -27,6 +27,6 @@ abstract class _Paths {
   // static const KATEGORI = '/kategori';
   // static const RUANGAN = '/ruangan';
   // static const BARANG = '/barang';
-  static const BARANG_MASUK = '/barang-masuk';
-  static const BARANG_KELUAR = '/barang-keluar';
+  // static const BARANG_MASUK = '/barang-masuk';
+  // static const BARANG_KELUAR = '/barang-keluar';
 }
